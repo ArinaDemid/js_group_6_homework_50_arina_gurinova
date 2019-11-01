@@ -1,0 +1,1 @@
+# js_group_6_homework_50_arina_gurinova
