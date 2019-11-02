@@ -47,16 +47,13 @@ class CaloriesCalculator {
     }
     getAllDishesInfo() {
         let dish = this.nameOfDish[0].products;
-        return(`=========================================\n ${this.nameOfDish[0].title} - 1 порция, ${calories} ккал:` +
-        `\n   * ${dish[0][0].title}, ${dish[0][1]} гр., ` +
-        (dish[0][0].calories * dish[0][1]/100) + ' ккал' +
-        `\n   * ${dish[1][0].title}, ${dish[1][1]} гр., ` + 
-        (dish[1][0].calories * dish[1][1]/100) + ' ккал' +
-        `\n   * ${dish[2][0].title}, ${dish[2][1]} гр., ` +
-        (dish[2][0].calories * dish[2][1]/100) + ' ккал' +
-        `\n   * ${dish[3][0].title}, ${dish[3][1]} гр., ` +
-        (dish[3][0].calories * dish[3][1]/100) + ' ккал' +
-        `\n=========================================`);
+        let footerString = `=========================================`;
+        let headString = footerString + `\n ${this.nameOfDish[0].title} - 1 порция, ${calories} ккал:`;
+        
+        for (let i = 0; i < dish.length; i++) {
+            headString += (`\n   * ${dish[i][0].title}, ${dish[i][1]} гр., ` + dish[i][0].calories * dish[i][1]/100 + ' ккал\n');
+        }
+        return(headString + footerString);
     }
     
 }
