@@ -11,14 +11,15 @@ class Product {
 }
 
 class Dish {
-    constructor(nameOfDish) {
-        if(typeof nameOfDish === 'undefined' || typeof nameOfDish === 'number' || 
-        nameOfDish.length === 0) console.log('Enter the correct dish name');
+    constructor(dishes) {
+        if(typeof dishes === 'undefined' || typeof dishes === 'number' || 
+        dishes.length === 0) console.log('Enter the correct dish name');
         else {
-            this.title = nameOfDish;
+            this.title = dishes;
             this.products = [];
         }
     }
+    
     addProduct(ingredient, quantity) {
         if(quantity <= 0 || typeof ingredient === 'undefined' || typeof quantity === 'undefined' || 
         ingredient.length === 0 || typeof ingredient === 'number' ||  typeof quantity === 'string') {
@@ -28,48 +29,58 @@ class Dish {
             this.products.push([ingredient, quantity]);
         }
     }
+
     getCalories() {
-        let calories = 0;
+        let caloriesOfDish = 0;
         let amount = 0;
         for (let i = 0; i <  this.products.length; i++) {
             amount = this.products[i][1]/100 * this.products[i][0].calories;
-            calories += amount;
+            caloriesOfDish += amount;
             
         }
-        return calories;
+        return caloriesOfDish;
     }
 }
 
 class CaloriesCalculator {
     constructor() {
-        this.nameOfDish = [];
+        this.dishes = [];
     }
     
-    addDish(nameOfDish) {
-        if(typeof nameOfDish === 'undefined' || typeof nameOfDish === "number") console.log('Enter the correct dish name');
-        else this.nameOfDish.push(nameOfDish);
+    addDish(dish) {
+        if(typeof dish === 'undefined' || typeof dish === "number") console.log('Enter the correct dish');
+        else this.dishes.push(dish);
     }
     
     getTotalCalories() {
         let calories = 0;
         let amount = 0;
-        for (let i = 0; i < this.nameOfDish[0].products.length; i++) {
-            amount =  this.nameOfDish[0].products[i][1]/100 * this.nameOfDish[0].products[i][0].calories;
-            calories += amount;
+        
+        for (let j = 0; j < this.dishes.length; j++) {
             
+            for (let i = 0; i < this.dishes[j].products.length; i++) {
+                amount =  this.dishes[j].products[i][1]/100 * this.dishes[j].products[i][0].calories;
+                calories += amount;
+            }
         }
         return calories;
-        
     }
+    
     getAllDishesInfo() {
-        let dish = this.nameOfDish[0].products;
-        let footerString = `=========================================`;
-        let headString = footerString + `\n ${this.nameOfDish[0].title} - 1 порция, ${calories} ккал:`;
-        
-        for (let i = 0; i < dish.length; i++) {
-            headString += (`\n   * ${dish[i][0].title}, ${dish[i][1]} гр., ` + dish[i][0].calories * dish[i][1]/100 + ' ккал\n');
+        let allCaloriesInfo = '';
+        let dish;
+        const footerString = `\n=========================================\n`;
+        let headString;
+        for (let j = 0; j < this.dishes.length; j++) {
+            dish = this.dishes[j].products;
+            headString = footerString + ` ${this.dishes[j].title} - 1 порция, ${this.dishes[j].getCalories()} ккал:`;
+            
+            for (let i = 0; i < dish.length; i++) {
+                headString += (`\n   * ${dish[i][0].title}, ${dish[i][1]} гр., ` + dish[i][0].calories * dish[i][1]/100 + ' ккал\n');
+            }
+            allCaloriesInfo += (headString + footerString);
         }
-        return(headString + footerString);
+        return allCaloriesInfo;
     }
     
 }
@@ -100,9 +111,25 @@ plov.addProduct('', -20);
 plov.addProduct(meat, -20);
 plov.addProduct(20);
 
+plov.getCalories();
+
+const pork = new Product('Филе свинина', 170);
+const potatoes = new Product('Картофель', 150);
+const pepper = new Product('Перец', 20);
+
+const roast = new Dish('Жаркое');
+
+roast.addProduct(pork, 150);
+roast.addProduct(potatoes, 200);
+roast.addProduct(pepper, 100);
+roast.addProduct(carrot, 100);
+
+roast.getCalories();
 
 const calculator = new CaloriesCalculator();
+
 calculator.addDish(plov);
+calculator.addDish(roast);
 
 calculator.addDish();
 calculator.addDish(-20);
