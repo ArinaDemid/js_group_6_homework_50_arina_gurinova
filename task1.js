@@ -63,7 +63,7 @@ class CaloriesCalculator {
                 calories += amount;
             }
         }
-        return calories;
+        return `Total calories: ${calories}`;
     }
     
     getAllDishesInfo() {
@@ -76,7 +76,7 @@ class CaloriesCalculator {
             headString = footerString + ` ${this.dishes[j].title} - 1 порция, ${this.dishes[j].getCalories()} ккал:`;
             
             for (let i = 0; i < dish.length; i++) {
-                headString += (`\n   * ${dish[i][0].title}, ${dish[i][1]} гр., ` + dish[i][0].calories * dish[i][1]/100 + ' ккал\n');
+                headString += `\n   * ${dish[i][0].title}, ${dish[i][1]} гр.,  ${dish[i][0].calories * dish[i][1]/100} ккал\n`;
             }
             allCaloriesInfo += (headString + footerString);
         }
@@ -134,7 +134,7 @@ calculator.addDish(roast);
 calculator.addDish();
 calculator.addDish(-20);
 
-const calories = calculator.getTotalCalories();
-console.log(calories);
 const totals = calculator.getAllDishesInfo();
 console.log(totals);
+const calories = calculator.getTotalCalories();
+console.log(calories);
